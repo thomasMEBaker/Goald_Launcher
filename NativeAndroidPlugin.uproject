@@ -48,6 +48,14 @@
 		{
 			"Name": "AndroidAPITemplate",
 			"Enabled": true
+		},
+		{
+			"Name": "PicoXR",
+			"Enabled": false,
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Android"
+			]
 		}
 	],
 	"TargetPlatforms": [

@@ -43,27 +43,30 @@
   <!-- optional additions to the GameActivity imports in GameActivity.java -->
 	<gameActivityImportAdditions>
 	  <insert>
-		import java.util.HashSet;
-		import java.util.Arrays;
-		import android.text.TextUtils;
-		import android.graphics.BitmapFactory; 
-		import android.os.Handler; 
-		import android.widget.Toast;
-		
-		import android.bluetooth.BluetoothManager;
-		import android.bluetooth.BluetoothAdapter;
-		import android.bluetooth.BluetoothDevice;
-		import android.bluetooth.BluetoothGatt;
-		import android.bluetooth.BluetoothGattCallback;
-		import android.bluetooth.BluetoothGattCharacteristic;
-		import android.bluetooth.BluetoothGattDescriptor;
-		import android.bluetooth.BluetoothGattService;
-		import android.bluetooth.BluetoothProfile;
-		import android.content.Context;
-		import android.util.Log;
-		import java.util.Set;
-		import java.util.UUID;
-		
+      import java.util.HashSet;
+      import java.util.Arrays;
+      import android.text.TextUtils;
+      import android.graphics.BitmapFactory;
+      import android.os.Handler;
+      import android.widget.Toast;
+
+      import android.bluetooth.BluetoothManager;
+      import android.bluetooth.BluetoothAdapter;
+      import android.bluetooth.BluetoothDevice;
+      import android.bluetooth.BluetoothGatt;
+      import android.bluetooth.BluetoothGattCallback;
+      import android.bluetooth.BluetoothGattCharacteristic;
+      import android.bluetooth.BluetoothGattDescriptor;
+      import android.bluetooth.BluetoothGattService;
+      import android.bluetooth.BluetoothProfile;
+      import android.content.Context;
+      import android.util.Log;
+      import java.util.Set;
+      import java.util.UUID;
+      import java.net.InetAddress;
+      import java.net.UnknownHostException;
+      import android.net.ConnectivityManager;
+
     </insert>
 	</gameActivityImportAdditions>
 	
@@ -76,7 +79,8 @@
       private Sensor mLight;
       private SensorEventListener mSensorListener;
       private float mLastLightMeasure;
-	  private static final String TAG = "NativeAndroidPlugin-";
+			private static final String TAG = "NativeAndroidPlugin-";
+      public static Context context;
 	  
 	  public void AndroidThunkJava_AndroidAPI_LaunchRelieve() {
 			Intent relieveLaunchIntent = getPackageManager().getLaunchIntentForPackage("com.RovrSystems.RovrRelieve");
@@ -92,6 +96,22 @@
 			Intent firefoxLaunchIntent = getPackageManager().getLaunchIntentForPackage("org.mozilla.vrbrowser");
 			startActivity( firefoxLaunchIntent );
 		}
+    
+    public void AndroidThunkJava_AndroidAPI_CheckInternet(boolean[] input) {
+        try {
+        InetAddress address = InetAddress.getByName("www.google.com");
+        input[0] = !address.equals("");
+				}catch (UnknownHostException e) {
+						// Log error
+            input[0] = false;
+				}
+		}
+    
+    public void AndroidThunkJava_AndroidAPI_CheckValidConnection(boolean[] input) {
+				context = getApplicationContext();
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+				input[0] = connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();;
+    }
 
 		]]>
 		</insert>

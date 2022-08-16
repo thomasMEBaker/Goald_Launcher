@@ -26,4 +26,9 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (Keywords = "AndroidAPI ", DisplayName = "Launch Firefox"), Category = "ROVR Launcher")
 		static void AndroidAPITemplate_LaunchFirefox();
 
+	UFUNCTION(BlueprintCallable, meta = (Keywords = "AndroidAPI ", DisplayName = "Check Internet"), Category = "ROVR Launcher")
+		static bool AndroidAPITemplate_CheckInternet();
+
+	UFUNCTION(BlueprintCallable, meta = (Keywords = "AndroidAPI ", DisplayName = "Check Valid Connection"), Category = "ROVR Launcher")
+		static bool AndroidAPITemplate_CheckValidConnection();
 };
